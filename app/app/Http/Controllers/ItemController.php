@@ -51,8 +51,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        dd($item);
-        dd('items/' . __FUNCTION__);
+        return Inertia::render('Items/Show', compact('item'));
     }
 
     /**
@@ -60,7 +59,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        dd('items/' . __FUNCTION__);
+        return Inertia::render('Items/Edit', compact('item'));
     }
 
     /**
@@ -68,7 +67,14 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        dd('items/' . __FUNCTION__);
+        $item->name = $request->name;
+        $item->memo = $request->memo;
+        $item->price = $request->price;
+        $item->is_selling = $request->is_selling;
+        $item->save();
+        session()->flash('status', 'success');
+        session()->flash('message', '更新を完了しました。');
+        return to_route('items.show', $item->id);
     }
 
     /**
@@ -76,6 +82,9 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        dd('items/' . __FUNCTION__);
+        $item->delete();
+        session()->flash('status', 'warning');
+        session()->flash('message', "ID:{$item->id} 商品データ「{$item->name}」を削除しました。");
+        return to_route('items.index');
     }
 }

@@ -12,15 +12,15 @@ const lightTheme = createTheme({
         mode: 'light',
         text: { primary: '#333' },  // デフォ（primaryの？）全体のフォントカラー
         background: {
-            default: '#fff',     // デフォルトの背景色
+            default: colors.grey[200],     // デフォルトの背景色
           },
         // 自作カラー。デフォ以外の背景色
          bg: {
-            color1: colors.grey[100],
-            color2: colors.grey[200],
-            color3: colors.grey[300],
-            color4: colors.grey[400],
-            color5: colors.grey[500]
+            color1: '#fff',
+            color2: colors.grey[100],
+            color3: colors.grey[200],
+            color4: colors.grey[300],
+            color5: colors.grey[400]
          },
 
         // muiのcolor="primary"（メインボタンなど）の色を設定
@@ -108,8 +108,6 @@ export function defaultTheme() {
 
     // 手動で設定の場合（カラー確認用）
     // const prefersDarkMode = true
-
-    console.log('prefersDarkMode', prefersDarkMode)
 
     // darkかlightどちらか対応した方のthemeを取得
     const theme = prefersDarkMode ? darkTheme : lightTheme

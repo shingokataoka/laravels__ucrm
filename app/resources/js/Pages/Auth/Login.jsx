@@ -7,7 +7,13 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
+import { css } from '@emotion/react';
+import { defaultTheme } from '@/Components/defaultThemeProvider';
+
+/** @jsxImportSource @emotion/react */
 export default function Login({ status, canResetPassword }) {
+    const palette = defaultTheme().palette
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -73,7 +79,7 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ml-2 text-sm">Remember me</span>
                     </label>
                 </div>
 
@@ -81,9 +87,15 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            css={css`
+                                transition: color 0.25s;
+                                &:hover{
+                                    color: ${ palette.info.light };
+                                }
+                            `}
                         >
-                            Forgot your password?
+                            { __('Forgot your password?') }
                         </Link>
                     )}
 

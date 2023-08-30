@@ -3,21 +3,28 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
+import { css } from '@emotion/react';
+import { defaultTheme } from '@/Components/defaultThemeProvider';
+
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import { useForm } from '@inertiajs/react';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
-import { defaultTheme } from '@/Components/defaultThemeProvider';
-import { css } from '@emotion/react';
+import {useForm} from '@inertiajs/react';
 
-export default function ItemCreate({ auth }) {
+export default function ItemCreate({ auth, item }) {
     const palette = defaultTheme().palette
     const form = useForm({
-        name: '',
-        memo: '',
-        price: 0
+        name: item.name,
+        memo: item.memo,
+        price: item.price,
+        is_selling: item.is_selling
     })
 
     const [textFieldColor1, setTextFieldColor1] = useState(palette.bg.color2)
@@ -26,24 +33,23 @@ export default function ItemCreate({ auth }) {
 
     const handleSubmit = e => {
         e.preventDefault()
-        form.post(
-            route('items.store'),
-            { preserveScroll: true }
+        form.put(
+            route('items.update', {id: item.id}),
         )
     }
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">商品登録</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">商品編集</h2>}
         >
-            <Head title="商品登録" />
+            <Head title="商品編集" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden shadow-sm sm:rounded-lg" css={css`background:${palette.bg.color1};`}>
                         <div className="p-6 text-gray-900">
-                            <form className="w-[600px] mx-auto flex flex-col gap-y-[16px]">
+                            <form onSubmit={ handleSubmit } className="w-[600px] mx-auto flex flex-col gap-y-[32px]">
                                 <TextField
                                     // required
                                     label="商品名"
@@ -92,7 +98,6 @@ export default function ItemCreate({ auth }) {
                                     type="number"
                                     label="商品価格"
                                     name="price"
-                                    inputProps={{min:0}}
                                     value={form.data.price}
                                     sx={{
                                         width: '100%',
@@ -105,10 +110,27 @@ export default function ItemCreate({ auth }) {
                                 />
                                 { form.errors.price && <div className="text-red-500">{form.errors.price}</div> }
 
-                                <Button type="button" onClick={handleSubmit} variant="contained" sx={{
+
+                                <FormControl  css={css`background:${palette.bg.color2}; padding:8px;`}>
+                                    <FormLabel id="demo-row-radio-buttons-group-label">ステータス</FormLabel>
+                                    <RadioGroup
+                                        onChange={e => form.setData('is_selling', e.target.value)}
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="is_selling"
+                                        value={form.data.is_selling}
+                                        css={css`color:${palette.text.primary};`}
+                                    >
+                                        <FormControlLabel value="1" control={<Radio />} label="販売中" />
+                                        <FormControlLabel value="0" control={<Radio />} label="停止中" />
+                                    </RadioGroup>
+                                </FormControl>
+
+
+                                <Button type="submit" variant="contained" sx={{
                                     margin: '16px auto',
                                     fontSize: '16px'
-                                }}>商品登録</Button>
+                                }}>更新する</Button>
                             </form>
 
                         </div>

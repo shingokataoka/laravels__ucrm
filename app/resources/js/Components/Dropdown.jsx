@@ -2,6 +2,9 @@ import { useState, createContext, useContext, Fragment } from 'react';
 import { Link } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
+import { defaultTheme } from './defaultThemeProvider';
+import { css } from '@emotion/react';
+
 const DropDownContext = createContext();
 
 const Dropdown = ({ children }) => {
@@ -30,7 +33,9 @@ const Trigger = ({ children }) => {
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
+/** @jsxImportSource @emotion/react */
+const Content = ({ align = 'right', width = '48', contentClasses = 'py-1', children }) => {
+    const palette = defaultTheme().palette
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -62,8 +67,9 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
                 <div
                     className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
+                    css={css`box-shadow: 0 5px 10px ${palette.bg.color4};`}
                 >
-                    <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={`rounded-md ring-1 ring-white ring-opacity-5 ` + contentClasses} css={css`background:${palette.bg.color1}; outline:${palette.bg.color3} 1px solid;`}>{children}</div>
                 </div>
             </Transition>
         </>
@@ -71,6 +77,8 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
 };
 
 const DropdownLink = ({ className = '', children, ...props }) => {
+    const palette = defaultTheme().palette
+
     return (
         <Link
             {...props}
@@ -78,6 +86,7 @@ const DropdownLink = ({ className = '', children, ...props }) => {
                 'block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ' +
                 className
             }
+            css={css`transition:all 0.25s; color:${palette.text.primary}; &:hover{background:${palette.bg.color2};}`}
         >
             {children}
         </Link>

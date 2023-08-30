@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
@@ -5,6 +7,7 @@ import Button from '@mui/material/Button';
 import { Link } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { css } from '@emotion/react';
 
 import * as React from 'react';
 import Table from '@mui/material/Table';
@@ -17,10 +20,11 @@ import TableRow from '@mui/material/TableRow';
 import Flash from '@/Components/Flash';
 
 export default function ItemIndex({ auth, items }) {
+    const palette = defaultTheme().palette
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">商品管理</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">商品管理</h2>}
         >
             <Head title="商品管理" />
 
@@ -29,7 +33,7 @@ export default function ItemIndex({ auth, items }) {
 
                     <Flash />
 
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg" css={css`background:${palette.bg.color1};`}>
 
                         <div className="p-6 text-gray-900 max-w-[700px] m-auto">
                             <div className="text-right">
