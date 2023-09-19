@@ -25,15 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        //環境変数APP_ENVが'production'か'staging'ならhttps
-        if (App::environment('production','staging')) {
-            URL::forceScheme('https');
-        }
-                // 環境変数APP_ENVが'local'ならhttp
-        if (App::environment('local')) {
-            URL::forceScheme('http');
-        }
-
         // reactで__('Dashboard')など言語メソッドを使えるようにする
         $this->reactFuncTransCreate();
     }

@@ -81,6 +81,7 @@ return [
         'string'  => ':attributeは、:max文字以下にしてください。',
         'array'   => ':attributeの項目は、:max個以下にしてください。',
     ],
+    'max_digits' => ':attributeは、:max文字以内にしてください。',
     'mimes'     => ':attributeには、:valuesタイプのファイルを指定してください。',
     'mimetypes' => ':attributeには、:valuesタイプのファイルを指定してください。',
     'min'       => [
@@ -89,6 +90,7 @@ return [
         'string'  => ':attributeは、:min文字以上にしてください。',
         'array'   => ':attributeの項目は、:min個以上にしてください。',
     ],
+    'min_digits' => ':attributeは、:min文字以上にしてください。',
     'not_in'                => '選択された:attributeは、有効ではありません。',
     'not_regex'             => ':attributeの形式が無効です。',
     'numeric'               => ':attributeには、数字を指定してください。',
@@ -150,6 +152,7 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'quantity' => '数量',
+        'date' => '日付',
 
         "information" => "情報",
         "memo" => "メモ",

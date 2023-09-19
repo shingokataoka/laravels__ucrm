@@ -1,3 +1,6 @@
+import { css } from '@emotion/react';
+import { DefaultThemeProvider, defaultTheme } from '@/Components/DefaultThemeProvider';
+
 import { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
@@ -5,12 +8,16 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
+
+
+/** @jsxImportSource @emotion/react */
 export default function Authenticated({ user, header, children }) {
+    const palette = defaultTheme().palette
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
-    return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+    return (<DefaultThemeProvider>
+        <div className="min-h-screen ">
+            <nav className="border-b border-gray-100" css={css`background:${ palette.bg.color1 }`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -24,6 +31,21 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink href={route('purchases.create')} active={route().current('purchases.create')}>
+                                    購入画面
+                                </NavLink>
+                                <NavLink href={route('purchases.index')} active={route().current('purchases.index')}>
+                                    購買履歴
+                                </NavLink>
+                                <NavLink href={route('items.index')} active={route().current('items.index')}>
+                                    商品管理
+                                </NavLink>
+                                <NavLink href={route('customers.index')} active={route().current('customers.index')}>
+                                    顧客管理
+                                </NavLink>
+                                <NavLink href={route('analysis')} active={route().current('analysis')}>
+                                    データ分析
+                                </NavLink>
                             </div>
                         </div>
 
@@ -34,7 +56,10 @@ export default function Authenticated({ user, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md  hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                css={css`
+                                                    background: ${ palette.bg.color2 }; &:hover{ color:${palette.text.disabled} }
+                                                `}
                                             >
                                                 {user.name}
 
@@ -67,7 +92,12 @@ export default function Authenticated({ user, header, children }) {
                         <div className="-mr-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                className="inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                css={css`
+                                    color: ${palette.text.disabled};
+                                    &:hover{background:${palette.bg.color2}; }
+                                    &:focus{background:${palette.bg.color2}; }
+                                `}
                             >
                                 <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -95,12 +125,27 @@ export default function Authenticated({ user, header, children }) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('purchases.create')} active={route().current('purchases.create')}>
+                            購入画面
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('purchases.index')} active={route().current('purchases.index')}>
+                            購買履歴
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('items.index')} active={route().current('items.index')}>
+                            商品管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('customers.index')} active={route().current('customers.index')}>
+                            顧客管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('analysis')} active={route().current('analysis')}>
+                            データ分析
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                            <div className="font-medium text-base text-gray-800" css={css`color:${palette.text.primary};`}>{user.name}</div>
+                            <div className="font-medium text-sm text-gray-500" css={css`color:${palette.text.secondary};`}>{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
@@ -114,12 +159,12 @@ export default function Authenticated({ user, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className=" shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
 
-            <main>{children}</main>
+            <main css={css`background:${ palette.background.default };`}>{children}</main>
         </div>
-    );
+    </DefaultThemeProvider>);
 }
