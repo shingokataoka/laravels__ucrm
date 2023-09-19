@@ -99,7 +99,7 @@ export default function ItemCreate({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">顧客登録</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">顧客登録</h2>}
         >
             <Head title="顧客登録" />
 

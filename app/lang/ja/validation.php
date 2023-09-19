@@ -152,6 +152,7 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'quantity' => '数量',
+        'date' => '日付',
 
         "information" => "情報",
         "memo" => "メモ",

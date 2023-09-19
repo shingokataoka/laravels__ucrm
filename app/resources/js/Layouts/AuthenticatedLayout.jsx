@@ -1,3 +1,6 @@
+import { css } from '@emotion/react';
+import { DefaultThemeProvider, defaultTheme } from '@/Components/DefaultThemeProvider';
+
 import { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
@@ -5,8 +8,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-import { css } from '@emotion/react';
-import { DefaultThemeProvider, defaultTheme } from '@/Components/DefaultThemeProvider';
+
 
 /** @jsxImportSource @emotion/react */
 export default function Authenticated({ user, header, children }) {
@@ -29,11 +31,20 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink href={route('purchases.create')} active={route().current('purchases.create')}>
+                                    購入画面
+                                </NavLink>
+                                <NavLink href={route('purchases.index')} active={route().current('purchases.index')}>
+                                    購買履歴
+                                </NavLink>
                                 <NavLink href={route('items.index')} active={route().current('items.index')}>
                                     商品管理
                                 </NavLink>
                                 <NavLink href={route('customers.index')} active={route().current('customers.index')}>
                                     顧客管理
+                                </NavLink>
+                                <NavLink href={route('analysis')} active={route().current('analysis')}>
+                                    データ分析
                                 </NavLink>
                             </div>
                         </div>
@@ -114,11 +125,20 @@ export default function Authenticated({ user, header, children }) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('purchases.create')} active={route().current('purchases.create')}>
+                            購入画面
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('purchases.index')} active={route().current('purchases.index')}>
+                            購買履歴
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('items.index')} active={route().current('items.index')}>
                             商品管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('customers.index')} active={route().current('customers.index')}>
                             顧客管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('analysis')} active={route().current('analysis')}>
+                            データ分析
                         </ResponsiveNavLink>
                     </div>
 

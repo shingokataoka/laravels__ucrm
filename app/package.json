@@ -25,6 +25,8 @@
         "@mui/icons-material": "^5.14.3",
         "@mui/lab": "^5.0.0-alpha.141",
         "@mui/material": "^5.14.6",
-        "axios-jsonp": "^1.0.4"
+        "@mui/x-charts": "^6.0.0-alpha.10",
+        "axios-jsonp": "^1.0.4",
+        "dayjs": "^1.11.9"
     }
 }

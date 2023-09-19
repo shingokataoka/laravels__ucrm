@@ -21,6 +21,11 @@ class Customer extends Model
         'memo',
     ];
 
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
     public function scopeSearchCustomers($query, $search)
     {
         // 元とは別のクローン$queryを作成

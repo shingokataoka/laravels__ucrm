@@ -1,8 +1,9 @@
+import CssBaseline from "@mui/material/CssBaseline";
+
 import * as colors from "@mui/material/colors";
 import { createTheme } from "@mui/material";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
 
 
 // lightモード時のthemeのカラーを指定
