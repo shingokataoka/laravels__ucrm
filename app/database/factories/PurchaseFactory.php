@@ -19,7 +19,7 @@ class PurchaseFactory extends Factory
     public function definition(): array
     {
         $decade = fake()->datetimeThisDecade();
-        $datetime = $decade->modify('+0 years');
+        $datetime = $decade->modify('+1 years');
         return [
             'customer_id' => mt_rand( 1, Customer::count() ),
             'status' => fake()->boolean(),
