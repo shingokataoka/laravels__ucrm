@@ -1,4 +1,4 @@
-import { defaultTheme } from "./defaultThemeProvider";
+import { defaultTheme } from "./DefaultThemeProvider";
 
 export default function InputLabel({ value, className = '', children, ...props }) {
     const palette = defaultTheme().palette

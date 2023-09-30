@@ -2,7 +2,7 @@ import { useState, createContext, useContext, Fragment } from 'react';
 import { Link } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
-import { defaultTheme } from './defaultThemeProvider';
+import { defaultTheme } from './DefaultThemeProvider';
 import { css } from '@emotion/react';
 
 const DropDownContext = createContext();

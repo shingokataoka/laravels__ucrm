@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 
 import { css } from '@emotion/react';
-import { defaultTheme } from './defaultThemeProvider';
+import { defaultTheme } from './DefaultThemeProvider';
 
 /** @jsxImportSource @emotion/react */
 export default function NavLink({ active = false, className = '', children, ...props }) {

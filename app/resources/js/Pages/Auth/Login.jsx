@@ -8,7 +8,7 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 import { css } from '@emotion/react';
-import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { defaultTheme } from '@/Components/DefaultThemeProvider';
 
 /** @jsxImportSource @emotion/react */
 export default function Login({ status, canResetPassword }) {

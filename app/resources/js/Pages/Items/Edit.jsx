@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import { css } from '@emotion/react';
-import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { defaultTheme } from '@/Components/DefaultThemeProvider';
 
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';

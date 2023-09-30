@@ -1,5 +1,5 @@
 // 自作した「デフォルトtheme返す関数」と「囲むとデフォルトthemeカラーになるコンポーネント」をインポート
-import { defaultTheme, DefaultThemeProvider } from "@/Components/defaultThemeProvider"
+import { defaultTheme, DefaultThemeProvider } from "@/Components/DefaultThemeProvider"
 
 // MUIのButtonコンポーネントをインポート。
 // MUIのコンポーネントが自作デフォルトthemeの色になるかテストするため

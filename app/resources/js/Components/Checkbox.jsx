@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { defaultTheme } from "./defaultThemeProvider";
+import { defaultTheme } from "./DefaultThemeProvider";
 
 export default function Checkbox({ className = '', ...props }) {
     // const [isChecked, setIsChecked] = useState(props.remember)

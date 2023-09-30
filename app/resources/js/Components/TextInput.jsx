@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from 'react';
 
-import { defaultTheme } from './defaultThemeProvider';
+import { defaultTheme } from './DefaultThemeProvider';
 
 export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
     const palette = defaultTheme().palette

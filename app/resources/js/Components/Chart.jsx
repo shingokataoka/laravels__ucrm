@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { defaultTheme } from './defaultThemeProvider';
+import { defaultTheme } from './DefaultThemeProvider';
 
 import { useState } from 'react';
 

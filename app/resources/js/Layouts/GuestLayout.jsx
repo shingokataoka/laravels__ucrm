@@ -1,7 +1,7 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
 
-import { defaultTheme, DefaultThemeProvider } from '@/Components/defaultThemeProvider';
+import { defaultTheme, DefaultThemeProvider } from '@/Components/DefaultThemeProvider';
 
 export default function Guest({ children }) {
     const palette = defaultTheme().palette

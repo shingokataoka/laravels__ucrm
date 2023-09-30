@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import {Link} from '@inertiajs/react';
 
-import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
 
 import Flash from '@/Components/Flash';

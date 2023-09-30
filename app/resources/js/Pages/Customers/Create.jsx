@@ -4,7 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import { css } from '@emotion/react';
-import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { defaultTheme } from '@/Components/DefaultThemeProvider';
 
 import axios from 'axios';
 import axiosJsonpAdapter from 'axios-jsonp'

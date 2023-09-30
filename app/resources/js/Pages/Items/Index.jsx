@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 import Button from '@mui/material/Button';
 import { Link } from '@inertiajs/react';
 
-import { defaultTheme } from '@/Components/defaultThemeProvider';
+import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
 
 import * as React from 'react';

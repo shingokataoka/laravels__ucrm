@@ -7,7 +7,7 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import { defaultTheme } from './defaultThemeProvider';
+import { defaultTheme } from './DefaultThemeProvider';
 import { css } from '@emotion/react';
 
 import Pagination from '@mui/material/Pagination';
