@@ -37,20 +37,6 @@ Route::get('/test/theme', function() {
 })->name('test.theme');
 
 Route::get('/dashboard', function () {
-    // Storage::disk('public')->put('hoge1.txt', 'testテスト');
-    for($i=1; $i<=3; $i++) {
-        dd( storage_path('a') );
-        Storage::disk('public')->makeDirectory("dir{$i}");
-        Storage::disk('public')->makeDirectory("dir{$i}");
-        Storage::disk('public')->put("dir1/dhoge{$i}.txt", 'testテスト');
-        Storage::disk('public')->setVisibility("dir{$i}", 'private');
-        Storage::disk('public')->setVisibility("dhoge{$i}.txt", 'private');
-        dump( Storage::disk('public')->getVisibility("dir{$i}") );
-        Storage::disk('public')->deleteDirectory("dir{$i}");
-
-        // dump( Storage::disk('public')->getVisibility("dir1/dhoge{$i}.txt") );
-    }
-    dd('Storageのpublicに保存');
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
