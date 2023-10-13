@@ -3,6 +3,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 import { usePage } from "@inertiajs/react";
+import nl2br from '@/Functions/nl2br';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,7 +36,7 @@ export default function Flash() {
                          width: '100%' ,
                          fontSize: '18px'
                     }}>
-                { flash.message && flash.message }
+                { flash.message && nl2br(flash.message) }
                 </Alert>
             </Snackbar>
         }

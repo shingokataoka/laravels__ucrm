@@ -11,12 +11,21 @@ import {Link} from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
+import emotionCss from '@/CssInJs/emotionCss';
 
-import Flash from '@/Components/Flash';
 
 export default function ItemShow({ auth, item }) {
     const palette = defaultTheme().palette
     const form = useForm()
+
+    const fieldCss = css`
+         *{
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        fieldset {border: 1px ${palette.bg.color5} solid !important;}
+    `
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -32,7 +41,7 @@ export default function ItemShow({ auth, item }) {
         >
             <Head title="商品詳細" />
 
-            <Flash />
+
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -48,9 +57,11 @@ export default function ItemShow({ auth, item }) {
                                         width: '100%',
                                         background: palette.bg.color2,
                                     }}
+                                    css={emotionCss(palette).textFieldDisabled}
                                 />
 
                                 <TextField
+                                    inputProps={{ readOnly: true }}
                                     label="メモ"
                                     name="memo"
                                     multiline
@@ -67,10 +78,11 @@ export default function ItemShow({ auth, item }) {
                                             }
                                         }
                                     }}
+                                    css={emotionCss(palette).textFieldDisabled}
                                 />
 
                                 <TextField
-                                    // required
+                                    inputProps={{ readOnly: true }}
                                     type="number"
                                     label="商品価格"
                                     name="price"
@@ -79,10 +91,11 @@ export default function ItemShow({ auth, item }) {
                                         width: '100%',
                                         background: palette.bg.color2,
                                     }}
+                                    css={emotionCss(palette).textFieldDisabled}
                                 />
 
                                 <TextField
-                                    // required
+                                    inputProps={{ readOnly: true }}
                                     type="text"
                                     label="ステータス"
                                     name="is_selling"
@@ -91,6 +104,7 @@ export default function ItemShow({ auth, item }) {
                                         width: '100%',
                                         background: palette.bg.color2,
                                     }}
+                                    css={emotionCss(palette).textFieldDisabled}
                                 />
 
                                 <Link href={ route('items.edit',{id: item.id}) } style={{margin: '16px auto'}} >

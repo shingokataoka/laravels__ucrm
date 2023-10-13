@@ -47,8 +47,9 @@ class CustomerController extends Controller
         ]);
         session()->flash('status', 'success');
         session()->flash('message', '顧客を登録しました。');
-
-        return Inertia::render('Customers/Index');
+        return to_route('customers.index', [
+            'page' => Customer::paginate(7)->lastPage(),
+        ]);
     }
 
     /**

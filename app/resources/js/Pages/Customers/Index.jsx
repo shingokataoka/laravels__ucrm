@@ -11,6 +11,7 @@ import {useForm} from '@inertiajs/react';
 import Pagination from '@mui/material/Pagination';
 
 import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 import { Link } from '@inertiajs/react';
 
 import { TextField } from '@mui/material';
@@ -73,7 +74,7 @@ export default function CustomerIndex({ auth, customers, urlParameters }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-                    <Flash />
+
 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg" css={css`background:${palette.bg.color1};`}>
 
@@ -82,20 +83,22 @@ export default function CustomerIndex({ auth, customers, urlParameters }) {
                             <div css={css`display:flex; align-items:center`}>
                                 <div css={css`display:flex; align-items:center;`}>
                                     <TextField
-                                        label="キーワード"
+                                        label="キーワード（カナ or かな）"
                                         variant="filled"
                                         name="search"
                                         value={searchForm.data.search}
+                                        css={css`width: 250px;`}
                                         onChange={e => searchForm.setData('search', e.target.value)}
                                     />
                                     { searchForm.errors.search && <div className="text-red-500">{ searchForm.errors.search }</div> }
-                                    <Button
+                                    <LoadingButton
                                         variant="contained"
                                         color="secondary"
                                         css={css`margin-left:8px;`}
                                         onClick={searchSubmit}
+                                        loading={searchForm.processing}
                                         disabled={allProcessing}
-                                    >検索</Button>
+                                    >検索</LoadingButton>
                                 </div>
                                 <Button href={ route('customers.create') }
                                     variant="contained"
@@ -130,7 +133,7 @@ function BasicTable({customers}) {
         <TableHead>
           <TableRow>
             <TableCell align="left" sx={{width:'20%'}}>id</TableCell>
-            <TableCell align="left" sx={{width:'20%'}}>指名</TableCell>
+            <TableCell align="left" sx={{width:'20%'}}>氏名</TableCell>
             <TableCell align="left" sx={{width:'20%'}}>カナ</TableCell>
             <TableCell align="left" sx={{width:'20%'}}>電話番号</TableCell>
           </TableRow>
@@ -141,14 +144,7 @@ function BasicTable({customers}) {
               key={row.id}
             >
               <TableCell align="left" sx={{width:'20%'}}>
-                <Link
-                    href={ route('customers.show', row.id) }
-                    style={{
-                        color: theme.primary.main
-                    }}
-                >
                     {row.id}
-                </Link>
                 </TableCell>
               <TableCell align="left" sx={{width:'20%'}}>{row.name}</TableCell>
               <TableCell align="left" sx={{width:'20%'}}>{row.kana}</TableCell>

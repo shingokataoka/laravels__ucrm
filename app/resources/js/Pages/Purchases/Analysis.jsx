@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
 
-import Css from '@/CssInJs/Emotion';
+import emotionCss from '@/CssInJs/Emotion';
 
 import { useState } from 'react';
 import dayjs from 'dayjs';
@@ -39,15 +39,28 @@ export default function Analysis({ auth }) {
     const [rPrms, setRPrms] = useState([ 14, 28, 60, 90])
     const [fPrms, setFPrms] = useState([7, 5, 3, 2])
     const [mPrms, setMPrms] = useState([300000, 200000, 100000, 30000])
+    const [xLabel, setXLabel] = useState('日付')
+
+    const textFieldDate = css`
+        ${emotionCss(palette).textFieldDate}
+        margin: 0;
+        width: 150px;
+    `
 
     const handleSubmit = async e => {
         setProcessing(true)
+        let nowXlabel = '日付'
+        // if (type === 'perDay') { nowXlabel = '日付' }
+        if (type === 'perMonth') { nowXlabel = '月' }
+        else if (type === 'perYear') { nowXlabel = '年' }
+        else if (type === 'decile') { nowXlabel = 'グループ' }
+
         const res = await axios.post(
             route('api.analysis'),
             { startDate, endDate, type, rPrms, fPrms, mPrms }
         )
-        console.log(res.data)
         setResData(res.data)
+        setXLabel(nowXlabel)
         setProcessing(false)
     }
 
@@ -65,7 +78,9 @@ export default function Analysis({ auth }) {
 
 
 
-                            <FormControl>
+                            <FormControl
+                                css={emotionCss(palette).formControl}
+                            >
                                 <FormLabel id="demo-row-radio-buttons-group-label">分析方法</FormLabel>
                                 <RadioGroup
                                     row
@@ -92,13 +107,13 @@ export default function Analysis({ auth }) {
                             >
                                 <div>From:</div>
                                 <TextField label="" variant="outlined" type="date"
-                                    css={Css.textFieldDate}
+                                    css={textFieldDate}
                                     value={startDate}
                                     onChange={ e => setStartDate(e.target.value) }
                                 />
                                 <div>To:</div>
                                 <TextField label="" variant="outlined" type="date"
-                                    css={Css.textFieldDate}
+                                    css={textFieldDate}
                                     value={ endDate }
                                     onChange={ e => setEndDate(e.target.value) }
                                 />
@@ -131,7 +146,7 @@ export default function Analysis({ auth }) {
                             <RfmResTable resData={resData} />
 
 
-                            <Chart resData={resData} />
+                            <Chart resData={resData} xLabel={xLabel} />
 
                             <DecileTable resData={resData} />
 

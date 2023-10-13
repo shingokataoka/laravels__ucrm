@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
+import emotionCss from '@/CssInJs/EmotionCss';
 
 import dayjs from 'dayjs';
 
@@ -54,21 +55,6 @@ export default function Create({ auth, items, order }) {
         display: block;
         margin: 16px auto;
     `
-    const textFieldCss = css`
-        width:100%;
-        margin-top: 32px;
-        input {
-            &:focus{
-                background:${palette.bg.color2};
-            }
-            border-radius: 3px;
-            transition: all 0.25s;
-        }
-    `
-    const textFieldDisabledCss = css`
-        ${textFieldCss}
-        fieldset { border: 1px ${palette.bg.color3} solid !important; }
-    `
 
 
     const handleChange = ({name, value}) => {
@@ -78,9 +64,15 @@ export default function Create({ auth, items, order }) {
 
     // 購入するボタンを押した送信処理
     const handleSubmit = e => {
+        setProcessing(true)
         router.put(
             route('purchases.update', {id: order.id}),
             formData,
+            {
+                finish: () => {
+                    setProcessing(false)
+                }
+            }
         )
     }
 
@@ -99,14 +91,14 @@ export default function Create({ auth, items, order }) {
                             <Container css={css`width:${breackpoints.sm}px;`}>
 
                                 <TextField label="購入日" type="date" variant="outlined"
-                                    css={textFieldDisabledCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     inputProps={{ disabled:true }}
                                     name="date"
                                     value={ dayjs(order.date).format('YYYY-MM-DD') }
                                 />
 
                                 <TextField label="会員名" variant="outlined"
-                                    css={textFieldDisabledCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     inputProps={{ disabled:true }}
                                     name="customer_info"
                                     value={order.customer_name}
@@ -114,7 +106,7 @@ export default function Create({ auth, items, order }) {
 
                                 <BasicTable
                                     items={items}
-                                    textFieldCss={textFieldCss}
+                                    textFieldCss={emotionCss(palette).textField}
                                     buttonCss={buttonCss}
                                     palette={palette}
                                     formData={formData}
@@ -223,13 +215,16 @@ function BasicTable({ palette, formData, setFormData, total, setTotal }) {
                             quantity: e.target.value
                         }) }
                     >
-                    { [0,1,2,3,4,5,6,7,8,9,10].map(value => (
+                    { [0,1,2,3,4,5,6,7,8,9,].map(value => (
                         <MenuItem key={value} value={value}>{value} 個</MenuItem>
                     )) }
                     </Select>
                 </FormControl>
               </TableCell>
-              <TableCell align="right">{ (item.price * item.quantity).toLocaleString() } 円</TableCell>
+              <TableCell
+                align="right"
+                css={css`min-width:120px;`}
+            >{ (item.price * item.quantity).toLocaleString() } 円</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -256,23 +251,14 @@ function RadioButtonsGroup({palette, formData, handleChange}) {
 
   return (
     <FormControl
-        css={css`
-            border: 1px ${palette.bg.color3} solid;
-            border-radius: 5px;
-            background: ${palette.bg.color1};
-            transition: background 0.25s;
-            &:hover {
-                outline: 1px ${palette.text.primary} solid;
-                background: ${palette.bg.color2};
-            }
-            padding: 8px;
-        `}
+        css={emotionCss(palette).formControl}
     >
-    <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
+    <FormLabel id="demo-row-radio-buttons-group-label">ステータス</FormLabel>
     <RadioGroup
         css={css`
             display:flex;
             align-items: center;
+            justify-content: space-evenly;
         `}
       row
       aria-labelledby="demo-row-radio-buttons-group-label"
@@ -281,7 +267,6 @@ function RadioButtonsGroup({palette, formData, handleChange}) {
       onChange={ e => handleChange(e.target) }
 
     >
-        <div css={css`margin:0 16px 0 8px;`}>ステータス</div>
       <FormControlLabel value={1} control={<Radio />} label="未キャンセル" />
       <FormControlLabel value={0} control={<Radio />} label="キャンセルする" />
     </RadioGroup>

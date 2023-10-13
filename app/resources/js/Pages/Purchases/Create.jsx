@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
+import emotionCss from '@/CssInJs/emotionCss';
 
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -49,10 +50,12 @@ export default function PurchaseCreate({ auth, items }) {
     const [page, setPage] = useState(1);
 
     const [processing, setProcessing] = useState(false)
+    const [searchProcessing, setSearchProcessing] = useState(false)
+    const [submitProcessing, setSubmitProcessing] = useState(false)
+
     const [search, setSearch] = useState('')
     const [searchCustomers, setSearchCustomers] = useState({data:{data:[]}})
     const errors = usePage().props.errors
-
 
     const [formData, setFormData] = useState({
         date: dayjs().tz('Asia/Tokyo').format('YYYY-MM-DD'),
@@ -69,49 +72,36 @@ export default function PurchaseCreate({ auth, items }) {
         margin: 16px auto;
     `
 
-    const textFieldCss = css`
-        width:100%;
-        margin-top: 16px;
-        input {
-            &:focus{
-                background:${palette.bg.color2};
-            }
-            border-radius: 3px;
-            transition: all 0.25s;
-        }
-    `
-    const dateFieldCssNull = css`
-        ${textFieldCss}
-        input {
-         &:focus { color: ${palette.text.primary}; }
-            color: rgba(0,0,0,0);
-        }
-    `
-    const [dateFieldCss, setDateFieldCss] = useState(dateFieldCssNull)
-
-    const changeDate = ({name, value}) => {
-        handleChange({name, value})
-        if (value === '') setDateFieldCss(data => (dateFieldCssNull))
-        else setDateFieldCss(data => (textFieldCss))
-    }
 
     const handleChange = ({name, value}) => {
         setFormData(data => ({ ...data, [name]:value }))
     }
 
+    const changeDate = (e) => {
+        handleChange(e.target)
+        e.target.focus()
+        e.target.blur()
+    }
+
     // 非同期でsearchワードのcustomersを(paginateデータで)取得
     const handleSearchCustomers = async (search, page) => {
-        setProcessing(data => true)
+        setProcessing(true)
+        setSearchProcessing(true)
         const resData = await axios.get(
             route('api.customers.search',{search:search, page:page}),
         )
-        setSearchCustomers(data => (resData))
-        setOpenModal(data => (true))
-        setProcessing(data => false)
+        setSearchCustomers(resData)
+        setOpenModal(true)
+        setProcessing(false)
+        setSearchProcessing(false)
+
     }
 
     // 購入するボタンを押した送信処理
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
+        setProcessing(true)
+        setSubmitProcessing(true)
+
         // 購入数のあるitemだけformData.itemsに{itemId, quantity}を入れる
         const newItems = []
         itemList.map(item => {
@@ -125,14 +115,16 @@ export default function PurchaseCreate({ auth, items }) {
             ['items']: newItems
         }
         setFormData(newFormData)
-        console.log(formData)
-        router.post( route('purchases.store'), newFormData )
+        router.post( route('purchases.store'), newFormData, {
+            preserveStatel: false,
+            onError : () => {
+                setProcessing(false)
+                setSubmitProcessing(false)
+            }
+        })
     }
 
 
-    useEffect(() => {
-        changeDate({name:'date', value:formData.date})
-    }, [])
 
 
     return (<>
@@ -151,18 +143,26 @@ export default function PurchaseCreate({ auth, items }) {
                         <div className="p-6">
                             <Container css={css`width:${breackpoints.sm}px;`}>
 
-                                <TextField label="購入日" type="date" variant="outlined"
-                                    css={dateFieldCss}
+                                <TextField
+                                    label="購入日"
+                                    type="date"
+                                    variant="outlined"
+                                    required
+                                    css={ emotionCss(palette).textFieldDate }
                                     name="date"
                                     value={formData.date}
-                                    onChange={ e => changeDate(e.target) }
+                                    onChange={ e => changeDate(e)}
                                 />
                                 {errors.date &&
                                     <div css={css`color:${palette.error.main};`}>{errors.date}</div>
                                 }
 
-                                <TextField label="会員名（カナか電話番号を入力して「検索する」）" variant="outlined"
-                                    css={textFieldCss}
+                                <TextField label="会員名（カナか電話番号を入力して「検索する」）"
+                                    variant="outlined"
+                                    inputProps={{
+                                        autoComplete: "off",
+                                    }}
+                                    css={emotionCss(palette).textField}
                                     name="customer_info"
                                     value={search}
                                     onChange={ e => setSearch(e.target.value) }
@@ -171,7 +171,8 @@ export default function PurchaseCreate({ auth, items }) {
                                     <div css={css`color:${palette.error.main};`}>{errors.customer_id}</div>
                                 }
                                 <LoadingButton
-                                    loading={processing}
+                                    disabled={processing}
+                                    loading={searchProcessing}
                                     variant="contained"
                                     css={buttonCss}
                                     color="secondary"
@@ -185,7 +186,7 @@ export default function PurchaseCreate({ auth, items }) {
 
                                 <BasicTable
                                     items={items}
-                                    textFieldCss={textFieldCss}
+                                    textFieldCss={emotionCss(palette).textField}
                                     buttonCss={buttonCss}
                                     palette={palette}
                                     setFormData={setFormData}
@@ -203,7 +204,8 @@ export default function PurchaseCreate({ auth, items }) {
                                 }
 
                                 <LoadingButton
-                                        loading={processing}
+                                        disabled={processing}
+                                        loading={submitProcessing}
                                         variant="contained"
                                         css={buttonCss}
                                         color="primary"
@@ -304,7 +306,9 @@ function BasicTable({ palette, itemList, setItemList }) {
                     </Select>
                 </FormControl>
               </TableCell>
-              <TableCell align="right">{ (item.price * item.quantity).toLocaleString() } 円</TableCell>
+              <TableCell align="right"
+                css={css`min-width:120px;`}
+              >{ (item.price * item.quantity).toLocaleString() } 円</TableCell>
             </TableRow>
           ))}
         </TableBody>

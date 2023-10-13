@@ -82,9 +82,14 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        $item->delete();
-        session()->flash('status', 'warning');
-        session()->flash('message', "ID:{$item->id} 商品データ「{$item->name}」を削除しました。");
+        try{
+            $item->delete();
+            session()->flash('status', 'error');
+            session()->flash('message', "ID:{$item->id} 商品データ「{$item->name}」を削除しました。");
+        } catch (\Exception $e) {
+            session()->flash('status', 'warning');
+            session()->flash('message', 'すでに購入情報があるため、削除できません。');
+        }
         return to_route('items.index');
     }
 }

@@ -10,9 +10,12 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { css } from '@emotion/react';
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 
+import { LoadingButton } from '@mui/lab';
+
 /** @jsxImportSource @emotion/react */
 export default function Login({ status, canResetPassword }) {
     const palette = defaultTheme().palette
+    const theme = defaultTheme()
 
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -40,7 +43,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value={__('Email')} />
 
                     <TextInput
                         id="email"
@@ -57,7 +60,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value={ __('Password') } />
 
                     <TextInput
                         id="password"
@@ -79,12 +82,12 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm">Remember me</span>
+                        <span className="ml-2 text-sm">{ __('Remember me') }</span>
                     </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
+                    {/* {canResetPassword && (
                         <Link
                             href={route('password.request')}
                             className="underline text-sm  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -97,11 +100,18 @@ export default function Login({ status, canResetPassword }) {
                         >
                             { __('Forgot your password?') }
                         </Link>
-                    )}
+                    )} */}
 
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                    <LoadingButton
+                        type="submit"
+                        variant='contained'
+                        css={css`
+                            margin-left: ${theme.spacing(2)} ;
+                        `}
+                        loading={processing}
+                    >
+                        { __('Log in') }
+                    </LoadingButton>
                 </div>
             </form>
         </GuestLayout>

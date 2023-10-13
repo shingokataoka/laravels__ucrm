@@ -13,7 +13,7 @@ const lightTheme = createTheme({
         mode: 'light',
         text: { primary: '#333' },  // デフォ（primaryの？）全体のフォントカラー
         background: {
-            default: colors.grey[200],     // デフォルトの背景色
+            default: colors.grey[100],     // デフォルトの背景色
           },
         // 自作カラー。デフォ以外の背景色
          bg: {

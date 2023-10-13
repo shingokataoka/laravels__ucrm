@@ -21,11 +21,11 @@ class RfmService
             ...request()->fPrms,
             ...request()->mPrms,
         ];
-        $bindParams = [
-            14, 28, 60, 90,
-            7, 5, 3, 2,
-            300000, 200000, 100000, 30000,
-        ];
+        // $bindParams = [
+        //     14, 28, 60, 90,
+        //     7, 5, 3, 2,
+        //     300000, 200000, 100000, 30000,
+        // ];
         $subQuery = DB::table($subQuery)->selectRaw('customer_id, customer_name,   recentDate, recency, frequency, monetary,
             CASE
                 WHEN recency < ? THEN 5
@@ -61,7 +61,8 @@ class RfmService
         // eachCountには[rank,r,f,m]をrank=5から入れていく
         // いったん$total, $rTotals, $fTotals, $mTotalsをだしてから配列に入れる
         $totalCount = DB::table($subQuery)->count();
-        $rCountQuery = DB::table($subQuery)->selectRaw('ranks.rank AS rRank, COUNT(r) AS num')->rightJoin('ranks', 'ranks.rank', '=', 'r')->groupBy('ranks.rank')->orderBy('r', 'desc');
+        $rCountQuery = DB::table($subQuery)->selectRaw('ranks.rank AS rRank, COUNT(r) AS num')->rightJoin('ranks', 'ranks.rank', '=', 'r')->groupBy('ranks.rank')->orderBy('ranks.rank', 'desc');
+
         $fCountQuery = DB::table($subQuery)->selectRaw('ranks.rank AS fRank, COUNT(f) AS num')
             ->rightJoin('ranks', 'ranks.rank', '=', 'f')
             ->groupBy('ranks.rank')

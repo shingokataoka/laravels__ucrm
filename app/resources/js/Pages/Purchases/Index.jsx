@@ -21,17 +21,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import Flash from '@/Components/Flash';
-
 
 export default function PurchaseIndex({auth, orders}) {
     const palette = defaultTheme().palette
     const [allProcessing, setAllProcessing] = useState(false)
     const pageChange = (e, currentPage) => {
+        setAllProcessing(true)
         router.get(
             route('purchases.index'),
             {page: currentPage},
-            {preserveScroll: true},
+            {
+                preserveScroll: true,
+                success: () => { setAllProcessing(false) }
+            },
         )
     }
 
@@ -45,7 +47,6 @@ export default function PurchaseIndex({auth, orders}) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-                    <Flash />
 
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg" css={css`background:${palette.bg.color1};`}>
 

@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/react';
 
 import { css } from '@emotion/react';
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
+import emotionCss from '@/CssInJs/EmotionCss';
 
 import axios from 'axios';
 import axiosJsonpAdapter from 'axios-jsonp'
@@ -15,7 +16,7 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -73,6 +74,12 @@ export default function ItemCreate({ auth }) {
         setFormData( formData => ({...formData, [name]:value}) )
     }
 
+    const ChangeDate = (e) => {
+        handleChange(e.target)
+        e.target.focus()
+        e.target.blur()
+    }
+
     const changePostcode = async ({name, value}) => {
         handleChange({name, value})
         const res = await axios(
@@ -80,7 +87,6 @@ export default function ItemCreate({ auth }) {
             {adapter: axiosJsonpAdapter}
         )
         if (res.data.fullAddress !== undefined) {
-            console.log('fullAddressあり')
             handleChange({
                 name: 'address',
                 value: res.data.fullAddress
@@ -89,12 +95,13 @@ export default function ItemCreate({ auth }) {
     }
 
     const handleSubmit = e => {
-        console.log('...formData', {...formData})
         setProcessing(true)
         router.post( route('customers.store'), formData, {
             onError: errors => { setProcessing(false) }
         } )
     }
+
+
 
     return (
         <AuthenticatedLayout
@@ -107,14 +114,14 @@ export default function ItemCreate({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden shadow-sm sm:rounded-lg" css={css`background:${palette.bg.color1};`}>
                         <div className="p-6 text-gray-900">
-                            <form className="w-[600px] mx-auto flex flex-col gap-y-[32px]">
+                            <form className="w-[600px] mx-auto flex flex-col">
 
                                 <TextField
                                     // required
                                     label="顧客名"
                                     name="name"
                                     value={formData.name}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.name && <div className="text-red-500">{ errors.name }</div> }
@@ -124,7 +131,7 @@ export default function ItemCreate({ auth }) {
                                     label="顧客名カナ"
                                     name="kana"
                                     value={formData.kana}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.kana && <div className="text-red-500">{ errors.kana }</div> }
@@ -135,7 +142,7 @@ export default function ItemCreate({ auth }) {
                                     name="tel"
                                     type="number"
                                     value={formData.tel}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.tel && <div className="text-red-500">{ errors.tel }</div> }
@@ -146,7 +153,7 @@ export default function ItemCreate({ auth }) {
                                     name="email"
                                     type="email"
                                     value={formData.email}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.email && <div className="text-red-500">{ errors.email }</div> }
@@ -157,7 +164,7 @@ export default function ItemCreate({ auth }) {
                                     name="postcode"
                                     type="number"
                                     value={formData.postcode}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => changePostcode(e.target)  }
                                 />
                                 { errors.postcode && <div className="text-red-500">{ errors.postcode }</div> }
@@ -167,39 +174,24 @@ export default function ItemCreate({ auth }) {
                                     label="住所"
                                     name="address"
                                     value={formData.address}
-                                    css={textFieldCss}
+                                    css={emotionCss(palette).textField}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.address && <div className="text-red-500">{ errors.address }</div> }
 
                                 <TextField
-                                    // required
                                     label="誕生日"
                                     name="birthday"
                                     type="date"
+                                    required
                                     value={formData.birthday}
-                                    css={css`
-                                        ${textFieldCss}
-                                        input {
-                                            text-align: center;
-                                        }
-                                    `}
-                                    onChange={  e => handleChange(e.target)  }
+                                    css={emotionCss(palette).textFieldDate}
+                                    onChange={  e => ChangeDate(e)  }
                                 />
                                 { errors.birthday && <div className="text-red-500">{ errors.birthday }</div> }
 
                                 <FormControl
-                                    css={css`
-                                        border: 1px ${palette.bg.color3} solid;
-                                        border-radius: 5px;
-                                        background: ${palette.bg.color1};
-                                        transition: background 0.25s;
-                                        &:hover {
-                                            outline: 1px ${palette.text.primary} solid;
-                                            background: ${palette.bg.color2};
-                                        }
-                                        padding: 8px;
-                                    `}
+                                    css={emotionCss(palette).formControl}
                                 >
                                     <FormLabel id="demo-row-radio-buttons-group-label">性別</FormLabel>
                                     <RadioGroup
@@ -228,13 +220,13 @@ export default function ItemCreate({ auth }) {
                                     inputProps={{
                                         // maxLength: 20,
                                     }}
-                                    css={multilineFieldCss}
+                                    css={emotionCss(palette).textFieldMulti}
                                     onChange={  e => handleChange(e.target)  }
                                 />
                                 { errors.memo && <div className="text-red-500">{ errors.memo }</div> }
 
 
-                                <Button
+                                <LoadingButton
                                     type="button"
                                     variant="contained"
                                     sx={{
@@ -242,8 +234,8 @@ export default function ItemCreate({ auth }) {
                                         fontSize: '16px'
                                     }}
                                     onClick={ e => handleSubmit(e) }
-                                    disabled={processing}
-                                >顧客登録</Button>
+                                    loading={processing}
+                                >顧客登録</LoadingButton>
                             </form>
 
                         </div>

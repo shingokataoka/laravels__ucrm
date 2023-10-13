@@ -39,6 +39,7 @@ class PurchaseController extends Controller
     {
         DB::beginTransaction();
         try {
+            // throw new \Exception("エラーだよ");
             // 購入履歴を保存。つまりpurchasesに[customer_id, status=true]を保存
             $purchase = Purchase::create([
                 'customer_id' => $request->customer_id,
@@ -52,14 +53,18 @@ class PurchaseController extends Controller
                 ]);
             }
             DB::commit();
+            session()->flash('status', 'success');
+            session()->flash('message', '購入が完了しました。');
+            $orders = Order::total()->paginate(20);
+            $lastPage = $orders->lastPage();
+            return to_route('purchases.index', ['page' => $lastPage]);
         } catch (\Exception $e) {
             DB::rollBack();
-            dump('エラー', $e->getMessage());
+            session()->flash('status', 'error');
+            session()->flash('message', 'エラー'.PHP_EOL.'購入できませんでした。'.PHP_EOL.'もう一度お願いします。');
+            return Inertia::location( route('purchases.create') );
         }
 
-        session()->flash('status', 'success');
-        session()->flash('message', '購入が完了しました。');
-        return to_route('dashboard');
     }
 
     /**

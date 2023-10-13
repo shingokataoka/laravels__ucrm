@@ -23,7 +23,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import Flash from '@/Components/Flash';
 
 export default function PurchaseCreate({ auth, items, order }) {
     const palette = defaultTheme().palette
@@ -51,7 +50,7 @@ export default function PurchaseCreate({ auth, items, order }) {
 
 
     return (<>
-        <Flash />
+
 
         <AuthenticatedLayout
             user={auth.user}
