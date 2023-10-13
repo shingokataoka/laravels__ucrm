@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
-import emotionCss from '@/CssInJs/EmotionCss';
+import emotionCss from '@/CssInJs/emotionCss';
 
 import dayjs from 'dayjs';
 

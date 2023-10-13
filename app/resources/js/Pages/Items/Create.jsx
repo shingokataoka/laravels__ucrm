@@ -11,7 +11,7 @@ import { useForm } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
 import { css } from '@emotion/react';
-import emotionCss from '@/CssInJs/EmotionCss';
+import emotionCss from '@/CssInJs/emotionCss';
 
 /** @jsxImportSource @emotion/react */
 export default function ItemCreate({ auth }) {
