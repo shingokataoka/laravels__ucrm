@@ -73,14 +73,14 @@ class PurchaseController extends Controller
     public function show(Purchase $purchase)
     {
 
-$items = $purchase->items();
-
         // この購入情報を各種アイテムごとに欲しいのでpurchases.idでを取得
-        $items = Order::where('id', '=', $purchase->id)->get();
+        $items = Order::where('id', '=', $purchase->id)
+            ->orderBy('item_id')
+            ->get();
 
         // この購入情報を合計金額で取得。よって一行レコードを取得
         $order = Order::total()
-            ->where('id', $purchase->id)
+            ->where('item_id', $purchase->id)
             ->first();
 
         return Inertia::render('Purchases/Show', compact('items', 'order'));
