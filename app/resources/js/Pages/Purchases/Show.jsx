@@ -4,7 +4,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
-import { css } from '@emotion/react';
+import { css } from '@emotion/react'
+import emotionCss from '@/CssInJs/emotionCss';
 
 import dayjs from 'dayjs';
 
@@ -30,24 +31,6 @@ export default function PurchaseCreate({ auth, items, order }) {
 
     const [processing, setProcessing] = useState(false)
 
-    const textFieldCss = css`
-        width:100%;
-        margin-top: 32px;
-        input {
-            &:focus{
-                background:${palette.bg.color2};
-            }
-            border-radius: 3px;
-            transition: all 0.25s;
-        }
-    `
-    const disabledFieldCss = css`
-        ${textFieldCss}
-        fieldset {
-            border: 1px ${palette.bg.color3} solid!important;
-        }
-    `
-
 
     return (<>
 
@@ -66,14 +49,14 @@ export default function PurchaseCreate({ auth, items, order }) {
 
                                 <TextField
                                     inputProps={{ disabled: true }}
-                                    css={disabledFieldCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     label="日付"
                                     value={ dayjs(order.created_at).format('YYYY-MM-DD') }
                                 />
 
                                 <TextField
                                     inputProps={{ disabled: true }}
-                                    css={disabledFieldCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     label="会員名"
                                     value={ `${order.customer_name}（${order.customer_kana}）`}
                                 />
@@ -111,14 +94,14 @@ export default function PurchaseCreate({ auth, items, order }) {
 
                                 <TextField
                                     inputProps={{ disabled: true }}
-                                    css={disabledFieldCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     label="合計金額"
                                     value={ (order.total - 0).toLocaleString() + ' 円' }
                                 />
 
                                 <TextField
                                     inputProps={{ disabled: true }}
-                                    css={disabledFieldCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     label="ステータス"
                                     value={
                                         (order.status === 1)? '購入'
@@ -128,7 +111,7 @@ export default function PurchaseCreate({ auth, items, order }) {
 
                                 <TextField
                                     inputProps={{ disabled: true }}
-                                    css={disabledFieldCss}
+                                    css={emotionCss(palette).textFieldDisabled}
                                     label="キャンセル日"
                                     value={
                                         (order.status === 0)?

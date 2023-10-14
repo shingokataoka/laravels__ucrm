@@ -1,0 +1,1 @@
+import{j as m}from"./app-8b3e4287.js";import{d as s}from"./DefaultThemeProvider-a3a1dc0a.js";function p({value:t,className:e="",children:r,...o}){const a=s().palette;return m.jsx("label",{...o,className:"block font-medium text-sm text-gray-700 "+e,style:{color:a.text.primary},children:t||r})}export{p as I};

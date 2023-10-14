@@ -94,7 +94,7 @@ export default function Create({ auth, items, order }) {
                                     css={emotionCss(palette).textFieldDisabled}
                                     inputProps={{ disabled:true }}
                                     name="date"
-                                    value={ dayjs(order.date).format('YYYY-MM-DD') }
+                                    value={ dayjs(order.created_at).format('YYYY-MM-DD') }
                                 />
 
                                 <TextField label="会員名" variant="outlined"

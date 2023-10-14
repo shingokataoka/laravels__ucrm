@@ -1,0 +1,1 @@
+import{j as t}from"./app-8b3e4287.js";import{B as n,E as o,C as i}from"./DefaultThemeProvider-a3a1dc0a.js";var x=t.Fragment;function c(r,s,a){return n.call(s,"css")?t.jsx(o,i(r,s),a):t.jsx(r,s,a)}function e(r,s,a){return n.call(s,"css")?t.jsxs(o,i(r,s),a):t.jsxs(r,s,a)}export{x as F,c as a,e as j};
