@@ -80,7 +80,7 @@ class PurchaseController extends Controller
 
         // この購入情報を合計金額で取得。よって一行レコードを取得
         $order = Order::total()
-            ->where('item_id', $purchase->id)
+            ->where('id', $purchase->id)
             ->first();
 
         return Inertia::render('Purchases/Show', compact('items', 'order'));
