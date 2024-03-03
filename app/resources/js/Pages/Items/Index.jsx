@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import { Link } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
+import { useMediaQuery } from '@mui/material';
 import { css } from '@emotion/react';
 
-import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +17,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import Flash from '@/Components/Flash';
 
 export default function ItemIndex({ auth, items }) {
     const palette = defaultTheme().palette
@@ -54,6 +53,9 @@ export default function ItemIndex({ auth, items }) {
 
 function BasicTable({items}) {
     const theme = defaultTheme().palette
+        // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const isDark = useMediaQuery(`(prefers-color-scheme: dark)`)
   return (
     <TableContainer >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -73,9 +75,18 @@ function BasicTable({items}) {
               <TableCell align="left" sx={{width:'20%'}}>
                 <Link
                     href={ route('items.show', row.id) }
-                    style={{
-                        color: theme.primary.main
-                    }}
+                    css={css`
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        background: ${theme.bg.color2};
+                        color: ${ isDark? '#eef' : '#003' };
+                        outline: 1px #0000 solid;
+                        transition:all 0.15s;
+                        &:hover {
+                            opacity: 0.6;
+                            outline-color: ${theme.bg.color4};
+                        }
+                    `}
                 >
                     {row.id}
                 </Link>

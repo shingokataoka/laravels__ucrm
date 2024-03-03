@@ -40,7 +40,9 @@ export default function Dashboard({ auth }) {
                                 <p>{nl2br(
                                     `このサイトは、顧客管理システムの練習兼ポートフォリオとして制作したものです。
                                     そのため、商品購入はシンプルにしています。(ECサイトは別サイトで制作済みです。)
-                                    （時間と環境の都合上、macパソコンでGoogle Chromeのみ動作確認済みです。）`
+
+                                    時間と環境の都合上、PCのGoogle Chromeのみで動作確認済みです。
+                                    （スマホ非対応です）`
                                 )}</p>
 
                                 <Typography variant="h5">

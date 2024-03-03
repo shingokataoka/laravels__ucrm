@@ -83,11 +83,11 @@ export default function CustomerIndex({ auth, customers, urlParameters }) {
                             <div css={css`display:flex; align-items:center`}>
                                 <div css={css`display:flex; align-items:center;`}>
                                     <TextField
-                                        label="キーワード（カナ or かな）"
+                                        label="キーワード（かな or カナ or 電話番号）"
                                         variant="filled"
                                         name="search"
                                         value={searchForm.data.search}
-                                        css={css`width: 250px;`}
+                                        css={css`width: 330px;`}
                                         onChange={e => searchForm.setData('search', e.target.value)}
                                     />
                                     { searchForm.errors.search && <div className="text-red-500">{ searchForm.errors.search }</div> }

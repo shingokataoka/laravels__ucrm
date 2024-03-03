@@ -21,7 +21,8 @@ export default function Index () {
 
         <Container
             css={css`
-                padding: ${spacing(2)};
+                padding: ${spacing(2)} 0;
+                padding-bottom: ${spacing(8)};
                 background:${palette.bg.color1};
                 text-align:center;
             `}
@@ -43,6 +44,7 @@ export default function Index () {
 
             <div css={css`
                     width: 400px;
+                    max-width:100%;
                     margin: ${spacing(4)} auto;
                     padding: ${spacing(2)};
                     background: ${palette.bg.color2};
@@ -62,20 +64,10 @@ export default function Index () {
                     <span css={css`text-decoration: underline;`}>遠慮なくログイン</span>していただければ幸いです。
                 </p>
 
-                <table css={css`
-                    display: inline-block;
-                `}>
-                    <tbody>
-                        <tr>
-                            <td css={css`text-align:right;`}>{ __('Email') } : </td>
-                            <td css={css`text-align:left;`}>user1@test.com</td>
-                        </tr>
-                        <tr>
-                            <td css={css`text-align:right;`}>{ __('Password') } : </td>
-                            <td css={css`text-align:left;`}>user1111</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <p>
+                    { __('Email') } :user1@test.com<br />
+                    { __('Password') } : user1111
+                </p>
             </div>
 
             <Button variant="contained"

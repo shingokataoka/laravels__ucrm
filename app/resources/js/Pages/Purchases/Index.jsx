@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 import { defaultTheme } from '@/Components/DefaultThemeProvider';
+import { useMediaQuery } from '@mui/material';
 import { css } from '@emotion/react';
 
 import { router } from '@inertiajs/react';
@@ -73,6 +74,10 @@ export default function PurchaseIndex({auth, orders}) {
 
 function BasicTable({orders}) {
     const theme = defaultTheme().palette
+    // ダークモード=true、普通モード=false を取得
+    const isDark = useMediaQuery('(prefers-color-scheme: dark)');
+
+
   return (
     <TableContainer >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -96,9 +101,13 @@ function BasicTable({orders}) {
                         css={css`
                             padding: 8px 12px;
                             border-radius: 6px;
-                            color: ${theme.primary.main};
+                            background: ${theme.bg.color2};
+                            color: ${ isDark? '#eef' : '#003' };
+                            outline: 1px #0000 solid;
+                            transition:all 0.15s;
                             &:hover {
-                                background: ${theme.bg.color3};
+                                opacity: 0.6;
+                                outline-color: ${theme.bg.color4};
                             }
                         `}
                     >

@@ -33,7 +33,7 @@ class Customer extends Model
 
         // kana部分一致 or tel前方一致で検索
         $cloneQuery->where('kana', 'like', "%{$search}%")
-            ->orWhere('tel', 'like', "{$search}%");
+            ->orWhere('tel', 'like', "%{$search}%");
         // 検索結果にヒットするレコードあるならそれをreturn
         if ($cloneQuery->exists()) return $cloneQuery;
 

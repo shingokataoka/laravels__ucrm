@@ -18,8 +18,8 @@ export default function Login({ status, canResetPassword }) {
     const theme = defaultTheme()
 
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: 'user1@test.com',
+        password: 'user1111',
         remember: false,
     });
 
